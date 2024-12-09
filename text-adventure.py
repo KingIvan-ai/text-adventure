@@ -11,27 +11,16 @@ def walkway(world):
             locations.append(userInput)
             print(locations)
             world["loc"] = "living room"
-            livingRoom(world)
             break
         elif userInput == "dining room":
             locations.append(userInput)
             print(locations)
             world["loc"] = "dining room"
-            diningRoom(world)
             break
         else:
             print("Invalid input! Please enter 'living room' or 'dining room'.")
 
 def livingRoom(world):
-    if len(locations) > 6:
-        print("While you were going back and forth between the living room and the dining room\n\
-a ghost attacks you from behind and kills you")
-        return print("GAME OVER")
-    if {"key", "axe"}.issubset(world["inv"]):
-        world["loc"] = "living room 2"
-        livingRoom2(world)
-        return
-
     while True:
         if locations.count("living room") < 2:
             with open("rooms.txt", "r") as file:
@@ -52,28 +41,17 @@ Will you steal the key from the monster this time? (Enter 'yes' or 'no')")
             world["loc"] = "dining room"
             locations.append("dining room")
             print(locations)
-            diningRoom(world)
             break
         elif(monsterChoice == "no"):
             print("You decide to not steal the dog's jewelry and instead go to the dining room.")
             world["loc"] = "dining room"
             locations.append("dining room")
             print(locations)
-            diningRoom(world)
             break
         else: 
             print("Invalid choice. Please enter yes or no.")
 
 def diningRoom(world):
-    if len(locations) > 6:
-        print("While you were going back and forth between the living room and the dining room\n\
-a ghost attacks you from behind and kills you")
-        return print("GAME OVER")
-    if {"key", "axe"}.issubset(world["inv"]):
-        world["loc"] = "living room 2"
-        livingRoom2(world)
-        return
-    
     while True:
         if locations.count("dining room") < 2:
                 with open("rooms.txt", "r") as file:
@@ -87,10 +65,10 @@ you may enter through the other door or return to the living room. Which will yo
             userInput = input(">")
             if userInput == "living room":
                     world["loc"] = "living room"
-                    livingRoom(world)
             if userInput == "new door":
                     print("Behind the door, there is a monster that jumps out and kills you.")
-                    return print("GAME OVER")
+                    world["player"] = "dead"
+                    break
 
         vaseChoice = input("> ")
 
@@ -104,7 +82,6 @@ you may enter through the other door or return to the living room. Which will yo
             world["loc"] = "living room"
             locations.append("living room")
             print(locations)
-            livingRoom(world)
             break
         elif(vaseChoice == "yes" and locations.count("living room") > 0):
             print("You grab the axe and return to the living room.")
@@ -113,23 +90,19 @@ you may enter through the other door or return to the living room. Which will yo
             world["loc"] = "living room"
             locations.append("living room")
             print(locations)
-            livingRoom(world)
             break
         elif(vaseChoice == "no"):
             with open("rooms.txt", "r") as file:
                 fileContents = file.read()
                 fileParagraphs = fileContents.split("\n\n")
                 print(fileParagraphs[5])
+                world["player"] = "dead"
                 break
         else: 
             print("Invalid choice. Please enter yes or no.")
 
 def livingRoom2(world):
-    with open("rooms.txt", "r") as file:
-                fileContents = file.read()
-                fileParagraphs = fileContents.split("\n\n")
-                print(fileParagraphs[7])
-    return print("You win!!")
+    pass
 
 def main():
     world = {}
@@ -138,11 +111,29 @@ def main():
     print("Welcome to the Haunted Mansion!")
     print("Please enter your name for this adventure")
     userInput = input()
-    world["playerName"] = userInput
+    world["player"] = userInput
     with open("rooms.txt", "r") as file:
         fileContents = file.read()
         fileParagraphs = fileContents.split("\n\n")
         print(fileParagraphs[0], end="\n\n")
     walkway(world)
+
+    while True:
+        if world["player"] == "dead":
+            return print("GAME OVER")
+        if len(locations) > 6:
+            print("While you were going back and forth between the living room and the dining room\n\
+a ghost attacks you from behind and kills you")
+            world["player"] = "dead"
+        if {"key", "axe"}.issubset(world["inv"]):
+            world["loc"] = "living room 2"
+        if world["loc"] == "walkway":
+            walkway(world)
+        if world["loc"] == "living room":
+            livingRoom(world)
+        if world["loc"] == "dining room":
+            diningRoom(world)
+        if world["loc"] == "living room 2":
+            livingRoom2(world)
 
 main()
