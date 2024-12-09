@@ -1,5 +1,9 @@
+# A list that keeps track of where the player has been.
+# Each time a room is entered, the list will append the name of that room.
 locations = []
 
+# The walkway function reads from a text file to set the scene for this location.
+# Then it present the player with the option of enetering the living room or dining room.
 def walkway(world):
     with open("rooms.txt", "r") as file:
         fileContents = file.read()
@@ -20,16 +24,19 @@ def walkway(world):
         else:
             print("Invalid input! Please enter 'living room' or 'dining room'.")
 
+# In this function, it reads from the text file to describe the scene. 
+# Then the player may either choose to steal an item (the key) or not.
+# Regardless of their choice, they will go to the dining room.
 def livingRoom(world):
     while True:
-        if locations.count("living room") < 2:
+        if locations.count("living room") < 2: # If the player has not already been to the living room it will read a detailed descritpion of the living room.
             with open("rooms.txt", "r") as file:
                         fileContents = file.read()
                         fileParagraphs = fileContents.split("\n\n")
                         print(fileParagraphs[2])
-        else:
-            print("You have returned to the living room with the monster and your friend.\n\
-Will you steal the key from the monster this time? (Enter 'yes' or 'no')")
+        else: # If the player has already been here, it will read the text below instead.
+            print("You have returned to the living room with the monster and your friend.\n"
+                "Will you steal the key from the monster this time? (Enter 'yes' or 'no')")
 
         monsterChoice = input("> ")
 
@@ -37,35 +44,40 @@ Will you steal the key from the monster this time? (Enter 'yes' or 'no')")
             print("Excellent. You have successfully stolen the key!\n"
                 "Now, it's time to go back to the dining room.")
             world["inv"].append("key")
-            print(world["inv"])
-            world["loc"] = "dining room"
+            print(world["inv"]) # I did this just to visualize what things were being added throughout the program during testing. I will remove it when the program is finished.
             locations.append("dining room")
-            print(locations)
+            print(locations) # I did this just to visualize what things were being added throughout the program during testing. I will remove it when the program is finished
+            world["loc"] = "dining room"
             break
         elif(monsterChoice == "no"):
-            print("You decide to not steal the dog's jewelry and instead go to the dining room.")
-            world["loc"] = "dining room"
             locations.append("dining room")
             print(locations)
+            print("You decide to not steal the dog's jewelry and instead go to the dining room.")
+            world["loc"] = "dining room"
             break
         else: 
-            print("Invalid choice. Please enter yes or no.")
+            print("Invalid choice. Please enter 'yes' or 'no'.")
 
+# In the dining room, the player may chose to break a vase or not. 
+# If the vase is broken, they will find an axe; if not, they will wake up and realize this was a dream.
 def diningRoom(world):
     while True:
-        if locations.count("dining room") < 2:
+        if locations.count("dining room") < 2: # If the player has not already been to the dining room it will read a detailed descritpion of the dining room.
                 with open("rooms.txt", "r") as file:
                         fileContents = file.read()
                         fileParagraphs = fileContents.split("\n\n")
                         print(fileParagraphs[3])
-        else:
+        else: # If they have been here before, they will find that there is another door. They may open it or go back to the living room.
             print("You have returned to the dining room. This time, you notice there is another door.\n\
 you may enter through the other door or return to the living room. Which will you choose?\n\
 (Enter 'living room' or 'new door')")
             userInput = input(">")
             if userInput == "living room":
+                    locations.append("living room")
+                    print(locations)
                     world["loc"] = "living room"
-            if userInput == "new door":
+                    break
+            if userInput == "new door": # I am trying to turn this into a battle scenario
                     print("Behind the door, there is a monster that jumps out and kills you.")
                     world["player"] = "dead"
                     break
@@ -79,17 +91,17 @@ you may enter through the other door or return to the living room. Which will yo
                 print(fileParagraphs[4])
             world["inv"].append("axe")
             print(world["inv"])
-            world["loc"] = "living room"
             locations.append("living room")
             print(locations)
+            world["loc"] = "living room"
             break
         elif(vaseChoice == "yes" and locations.count("living room") > 0):
             print("You grab the axe and return to the living room.")
             world["inv"].append("axe")
             print(world["inv"])
-            world["loc"] = "living room"
             locations.append("living room")
             print(locations)
+            world["loc"] = "living room"
             break
         elif(vaseChoice == "no"):
             with open("rooms.txt", "r") as file:
@@ -101,6 +113,9 @@ you may enter through the other door or return to the living room. Which will yo
         else: 
             print("Invalid choice. Please enter yes or no.")
 
+# This will be a final scenario that will automatically take place
+# When the player has successfully grabbed both the key and the axe
+# I am still working on it.
 def livingRoom2(world):
     pass
 
@@ -118,12 +133,13 @@ def main():
         print(fileParagraphs[0], end="\n\n")
     walkway(world)
 
+    # A while loop that tells the program which function to run depending on world["loc"] and world["player"]
     while True:
         if world["player"] == "dead":
             return print("GAME OVER")
         if len(locations) > 6:
             print("While you were going back and forth between the living room and the dining room\n\
-a ghost attacks you from behind and kills you")
+a ghost attacks you from behind and kills you.")
             world["player"] = "dead"
         if {"key", "axe"}.issubset(world["inv"]):
             world["loc"] = "living room 2"
