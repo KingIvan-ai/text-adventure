@@ -119,6 +119,9 @@ you may enter through the other door or return to the living room. Which will yo
 def livingRoom2(world):
     pass
 
+# The main function starts by creating a name for our player 
+# and then defining variouis dictionaries that will be used throughout the program such as world["inv"]
+# It also reads the introductory text and contains a while loop for deciding which function to run.
 def main():
     world = {}
     world["loc"] = "walkway"
