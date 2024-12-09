@@ -116,7 +116,7 @@ you may enter through the other door or return to the living room. Which will yo
 # This will be a final scenario that will automatically take place
 # When the player has successfully grabbed both the key and the axe
 # I am still working on it.
-def livingRoom2(world):
+def finalFight(world):
     import fight
 
     result = fight.battle(player, enemy)
@@ -170,7 +170,7 @@ a ghost attacks you from behind and kills you.")
             livingRoom(world)
         if world["loc"] == "dining room":
             diningRoom(world)
-        if world["loc"] == "living room 2":
-            livingRoom2(world)
+        if world["loc"] == "final fight":
+            finalFight(world)
 
 main()
