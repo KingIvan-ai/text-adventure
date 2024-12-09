@@ -79,7 +79,7 @@ you may enter through the other door or return to the living room. Which will yo
                     break
             if userInput == "new door": # I am trying to turn this into a battle scenario
                     print("Behind the door, there is a monster that jumps out and kills you.")
-                    world["player"] = "dead"
+                    world["loc"] = "dead"
                     break
 
         vaseChoice = input("> ")
@@ -108,7 +108,7 @@ you may enter through the other door or return to the living room. Which will yo
                 fileContents = file.read()
                 fileParagraphs = fileContents.split("\n\n")
                 print(fileParagraphs[5])
-                world["player"] = "dead"
+                world["loc"] = "dead"
                 break
         else: 
             print("Invalid choice. Please enter yes or no.")
@@ -117,7 +117,14 @@ you may enter through the other door or return to the living room. Which will yo
 # When the player has successfully grabbed both the key and the axe
 # I am still working on it.
 def livingRoom2(world):
-    pass
+    import fight
+
+    result = fight.battle(player, enemy)
+    if result == "enemy dead":
+        print(f"The {enemy['name']} collapses on the ground")
+        print("YOU WIN!")
+    else:
+        print(f"The world goes dark for our hero {player['name']}")
 
 # The main function starts by creating a name for our player 
 # and then defining variouis dictionaries that will be used throughout the program such as world["inv"]
@@ -129,7 +136,18 @@ def main():
     print("Welcome to the Haunted Mansion!")
     print("Please enter your name for this adventure")
     userInput = input()
-    world["player"] = userInput
+    global player
+    player = {
+        "name" : userInput,
+        "hp" : 20,
+        "atk" : 5
+    }
+    global enemy
+    enemy = {
+        "name" : "The Monster",
+        "hp" : 20,
+        "atk" : 5
+    }
     with open("rooms.txt", "r") as file:
         fileContents = file.read()
         fileParagraphs = fileContents.split("\n\n")
@@ -138,8 +156,8 @@ def main():
 
     # A while loop that tells the program which function to run depending on world["loc"] and world["player"]
     while True:
-        if world["player"] == "dead":
-            return print("GAME OVER")
+        if world["loc"] == "dead":
+            return "GAME OVER"
         if len(locations) > 6:
             print("While you were going back and forth between the living room and the dining room\n\
 a ghost attacks you from behind and kills you.")
