@@ -124,6 +124,13 @@ you may enter through the other door or return to the living room. Which will yo
         else: 
             print("Invalid choice. Please enter yes or no.")
 
+def livingRoom2(world):
+    with open("rooms.txt", "r") as file:
+                fileContents = file.read()
+                fileParagraphs = fileContents.split("\n\n")
+                print(fileParagraphs[7])
+    return print("You win!!")
+
 def main():
     world = {}
     world["loc"] = "walkway"
