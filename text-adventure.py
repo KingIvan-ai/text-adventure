@@ -126,6 +126,15 @@ def finalFight(world):
     else:
         print(f"The world goes dark for our hero {player['name']}")
 
+
+def saveResults (player, world): 
+    f = open ("saveResults.txt", "w")
+    print(player)
+    f.write(f"name: {player["name"]}\n")
+    f.write(f"health points: {player["hp"]}\n")
+    f.write(f"inventory: {world["inv"]}\n")
+    f.close
+
 # The main function starts by creating a name for our player 
 # and then defining variouis dictionaries that will be used throughout the program such as world["inv"]
 # It also reads the introductory text and contains a while loop for deciding which function to run.
@@ -157,6 +166,7 @@ def main():
     # A while loop that tells the program which function to run depending on world["loc"]
     while True:
         if world["loc"] == "dead":
+            saveResults(player, world)
             return "GAME OVER"
         if len(locations) > 6:
             print("While you were going back and forth between the living room and the dining room\n"
@@ -172,5 +182,6 @@ def main():
             diningRoom(world)
         if world["loc"] == "final fight":
             finalFight(world)
+        
 
 main()
