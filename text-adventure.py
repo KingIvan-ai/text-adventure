@@ -68,9 +68,9 @@ def diningRoom(world):
                         fileParagraphs = fileContents.split("\n\n")
                         print(fileParagraphs[3])
         else: # If they have been here before, they will find that there is another door. They may open it or go back to the living room.
-            print("You have returned to the dining room. This time, you notice there is another door.\n\
-you may enter through the other door or return to the living room. Which will you choose?\n\
-(Enter 'living room' or 'new door')")
+            print("You have returned to the dining room. This time, you notice there is another door.\n"
+                "you may enter through the other door or return to the living room. Which will you choose?\n"
+                "(Enter 'living room' or 'new door')")
             userInput = input(">")
             if userInput == "living room":
                     locations.append("living room")
@@ -154,13 +154,13 @@ def main():
         print(fileParagraphs[0], end="\n\n")
     walkway(world)
 
-    # A while loop that tells the program which function to run depending on world["loc"] and world["player"]
+    # A while loop that tells the program which function to run depending on world["loc"]
     while True:
         if world["loc"] == "dead":
             return "GAME OVER"
         if len(locations) > 6:
-            print("While you were going back and forth between the living room and the dining room\n\
-a ghost attacks you from behind and kills you.")
+            print("While you were going back and forth between the living room and the dining room\n"
+                "a ghost attacks you from behind and kills you.")
             world["player"] = "dead"
         if {"key", "axe"}.issubset(world["inv"]):
             world["loc"] = "living room 2"
