@@ -113,13 +113,39 @@ def saveResults (player, world):
     f.write(f"inventory: {world["inv"]}\n")
     f.close
 
+def game_loop(world, fileParagraphs):
+    while True:
+        if world["loc"] == "dead":
+            return "GAME OVER"
+        if len(world["locations"]) > 6:
+            print("While you were going back and forth between the living room and the dining room\n"
+                "a ghost attacks you from behind and kills you.")
+            world["loc"] = "dead"
+
+        if {"key", "axe"}.issubset(world["inv"]):
+            world["loc"] = "final battle"
+        if world["loc"] == "final battle":
+            finalFight(world, player, enemy)
+
+        if world["loc"] == "walkway":
+            walkway(world, fileParagraphs)
+        if world["loc"] == "living room":
+            livingRoom(world, fileParagraphs)
+        if world["loc"] == "dining room":
+            diningRoom(world, fileParagraphs)
+
 # The main function starts by creating a name for our player 
 # and then defining variouis dictionaries that will be used throughout the program such as world["inv"]
 # It also reads the introductory text and contains a while loop for deciding which function to run.
 def main():
-    world = {}
-    world["loc"] = "walkway"
-    world["inv"] = []
+    # Starts the game by initializing the world and player, and runs the main loop.
+    world = {
+        "loc": "walkway",
+        "inv": [],
+        "locations": []
+    }
+    with open("rooms(1).txt", "r") as file:
+        fileParagraphs = file.read().split("\n\n")
     print("Welcome to the Haunted Mansion!")
     print("Please enter your name for this adventure")
     userInput = input()
@@ -135,31 +161,9 @@ def main():
         "hp" : 20,
         "atk" : 5
     }
-    with open("rooms.txt", "r") as file:
-        fileContents = file.read()
-        fileParagraphs = fileContents.split("\n\n")
-        print(fileParagraphs[0], end="\n\n")
-    walkway(world)
+    print(fileParagraphs[0], end="\n\n")
+    walkway(world, fileParagraphs)
 
-    # A while loop that tells the program which function to run depending on world["loc"]
-    while True:
-        if world["loc"] == "dead":
-            saveResults(player, world)
-            return "GAME OVER"
-        if len(locations) > 6:
-            print("While you were going back and forth between the living room and the dining room\n"
-                "a ghost attacks you from behind and kills you.")
-            world["player"] = "dead"
-        if {"key", "axe"}.issubset(world["inv"]):
-            world["loc"] = "living room 2"
-        if world["loc"] == "walkway":
-            walkway(world)
-        if world["loc"] == "living room":
-            livingRoom(world)
-        if world["loc"] == "dining room":
-            diningRoom(world)
-        if world["loc"] == "final fight":
-            finalFight(world)
-        
+    game_loop(world, fileParagraphs)
 
 main()
