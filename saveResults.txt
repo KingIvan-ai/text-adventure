@@ -1,0 +1,3 @@
+name: Ben
+health points: 20
+inventory: []
