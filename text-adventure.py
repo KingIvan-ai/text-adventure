@@ -4,12 +4,11 @@ def display_screne(world, fileParagraphs, paragraph_index, return_mesage):
     pass
 
 def get_valid_input(prompt, valid_options):
+    while True:
         choice = input(prompt).lower()
-        try:
-            choice in valid_options
+        if choice in valid_options:
             return choice
-        except:
-            return print(f"Invalid input. Please enter {valid_options}")
+        print(f"Invalid input. Please enter {valid_options}")
         
 def add_to_inventory(world, item):
     if item not in world["inv"]:
@@ -92,24 +91,27 @@ def diningRoom(world, fileParagraphs):
                     break
 
 def finalFight(world, player, enemy):
+    try:
+        import fight
+        result = fight.battle(player, enemy)
+        if result == "enemy dead":
+            print("The monster collapses on the ground.")
+            return "YOU WIN!"
+        else:
+            print("You tried your best. But the monster has killed and eaten you.")
+            world["loc"] = "dead"
+    except Exception as e:
+        print(f"An unexpected error occurred in the battle: {e}")
 
-    import fight
+def saveResults(player, world):
+    try:
+        with open("saveResults.txt", "w") as f:
+            f.write(f"name: {player['name']}\n")
+            f.write(f"health points: {player['hp']}\n")
+            f.write(f"inventory: {world['inv']}\n")
+    except IOError:
+        print("Error: Unable to save game results.")
 
-    result = fight.battle(player, enemy)
-    if result == "enemy dead":
-        print(f"The monster collapses on the ground")
-        return "YOU WIN!"
-    else:
-        print(f"You tried your best. But the monster has killed and eaten you.")
-        world["loc"] = "dead"
-
-def saveResults (player, world): 
-    f = open ("saveResults.txt", "w")
-    print(player)
-    f.write(f"name: {player['name']}\n")
-    f.write(f"health points: {player['hp']}\n")
-    f.write(f"inventory: {world['inv']}\n")
-    f.close
 
 def game_loop(world, fileParagraphs):
     while True:
@@ -123,11 +125,7 @@ def game_loop(world, fileParagraphs):
         if {"key", "axe"}.issubset(world["inv"]):
             world["loc"] = "final battle"
         if world["loc"] == "final battle":
-<<<<<<< HEAD
-            finalFight(world, player,)
-=======
             finalFight(world, player, enemy)
->>>>>>> 9dcd79775d3a9eb6cd60fd38c93d46ebe6dfde9e
 
         if world["loc"] == "walkway":
             walkway(world, fileParagraphs)
@@ -143,8 +141,17 @@ def main():
         "inv": [],
         "locations": []
     }
-    with open("rooms.txt", "r") as file:
-        fileParagraphs = file.read().split("\n\n")
+
+    try:
+        with open("rooms.txt", "r") as file:
+            fileParagraphs = file.read().split("\n\n")
+    except FileNotFoundError:
+        print("Error: The file 'rooms.txt' was not found. Please ensure it exists.")
+        return
+    except IOError:
+        print("Error: An issue occurred while reading the file.")
+        return
+
     print("Welcome to the Haunted Mansion!")
     print("Please enter your name for this adventure")
     userInput = input()
