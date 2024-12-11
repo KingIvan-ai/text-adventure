@@ -2,6 +2,28 @@
 # Each time a room is entered, the list will append the name of that room.
 locations = []
 
+def get_valid_input(prompt, valid_options):
+    while True:
+        choice = input(prompt).lower()
+        if choice in valid_options:
+            return choice
+        print(f"Invalid input. Please enter {valid_options}")
+        
+def add_to_inventory(world, item):
+    if item not in world["inv"]:
+        world["inv"].append(item)
+        print(f"{item} added to inventory.")
+
+def check_final_battle(world):
+    if {"key", "axe"}.issubset(world["inv"]):
+        world["loc"] = "final battle"
+        
+def move_to_location(world, new_location):
+    #Update the current location and record the movement.
+    world["locations"].append(new_location)
+    print(world["locations"])
+    world["loc"] = new_location
+
 # The walkway function reads from a text file to set the scene for this location.
 # Then it present the player with the option of enetering the living room or dining room.
 def walkway(world):
