@@ -1,7 +1,3 @@
-# A list that keeps track of where the player has been.
-# Each time a room is entered, the list will append the name of that room.
-locations = []
-
 def get_valid_input(prompt, valid_options):
     while True:
         choice = input(prompt).lower()
