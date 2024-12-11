@@ -1,6 +1,6 @@
 Welcome to the Haunted Mansion!
 Your best friend, a distant relative of the recently deceased owner,
-inherited this mansion after the owner’s mysterious death. During a
+inherited this mansion after the owner's mysterious death. During a
 visit, however, your friend went missing, and no one seems to know 
 where they are. It's up to you to enter the mansion, search for your 
 friend, and rescue them from whatever dark forces may lurk within...
@@ -18,7 +18,7 @@ half-pitbull, lays guarding a pile of shimmering jewelry. Your heart
 races as you spot your friend locked in a cage behind the beast, the 
 large lock glinting in the low light. Among the pile of treasure, there
 is a key. Perhaps it will open the cage. But stealing the key would 
-mean risking the monster’s wrath.
+mean risking the monster's wrath.
 Will you attempt to take the key from the monster?
 (Enter "yes" or "no")
 
