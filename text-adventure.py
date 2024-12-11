@@ -121,7 +121,7 @@ def game_loop(world, fileParagraphs):
         if {"key", "axe"}.issubset(world["inv"]):
             world["loc"] = "final battle"
         if world["loc"] == "final battle":
-            finalFight(world, player, enemy)
+            finalFight(world)
 
         if world["loc"] == "walkway":
             walkway(world, fileParagraphs)
@@ -140,7 +140,7 @@ def main():
         "inv": [],
         "locations": []
     }
-    with open("rooms(1).txt", "r") as file:
+    with open("rooms.txt", "r") as file:
         fileParagraphs = file.read().split("\n\n")
     print("Welcome to the Haunted Mansion!")
     print("Please enter your name for this adventure")
