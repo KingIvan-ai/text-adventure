@@ -85,8 +85,8 @@ def diningRoom(world, fileParagraphs):
                     move_to_location(world, userInput)
                     break
             if userInput == "new door": # I am trying to turn this into a battle scenario
-                    print("Behind the door, there is a purple gremlin that jumps out and attacks you!")
-                    print("Time to fight!")
+                    print("Behind the door, there is a purple gremlin that jumps out and attacks you!\nTime to fight!")
+                    print(f"Purple gremlin hp: {enemy2['hp']}\nPuple gremlin attack: {enemy2['atk']}")
                     combat(world, player, enemy2)
                     break
         if world["locations"].count("dining room") > 2 and "purple gremlin" not in world["vic"]:
@@ -96,8 +96,8 @@ def diningRoom(world, fileParagraphs):
                     move_to_location(world, userInput)
                     break
             if userInput == "new door": # I am trying to turn this into a battle scenario
-                    print("Behind the door, there is a purple gremlin that jumps out and attacks you!")
-                    print("Time to fight!")
+                    print("Behind the door, there is a purple gremlin that jumps out and attacks you!\nTime to fight!")
+                    print(f"Purple gremlin hp: {enemy2['hp']}\nPuple gremlin attack: {enemy2['atk']}")
                     combat(world, player, enemy2)
                     break
         else:
@@ -152,6 +152,7 @@ def game_loop(world, fileParagraphs):
         if world["loc"] == "final battle":
             print(f"You have successfully grabbed both the key and the axe.\nIt's time for the final showdown between you and the monster!\n"
           "The Monster comes towards you and the fight begins!")
+            print(f"Monster hp: {enemy2['hp']}\nMonster attack: {enemy2['atk']}")
             combat(world, player, enemy1)
             break
         elif world["loc"] == "walkway":
@@ -202,6 +203,7 @@ def main():
         "atk" : 3
     }
     print(fileParagraphs[0], end="\n\n")
+    print(f"Your hp: {player['hp']}\nYour attack: {player['atk']}\n")
     walkway(world, fileParagraphs)
     game_loop(world, fileParagraphs)
 
