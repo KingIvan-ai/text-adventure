@@ -9,7 +9,6 @@ def add_to_inventory(world, item):
     if item not in world["inv"]:
         world["inv"].append(item)
         print(f"{item} added to inventory.")
-        print(world["inv"])
 
 def check_final_battle(world):
     if {"key", "axe"}.issubset(world["inv"]):
@@ -23,7 +22,6 @@ def move_to_location(world, new_location):
             world["loc"] = "dead"
     else:
         world["locations"].append(new_location)
-        print(world["locations"])
         world["loc"] = new_location
 
 def walkway(world, fileParagraphs):
@@ -123,7 +121,6 @@ def combat(world, player, enemy):
                 print(f"You have defeated the purple gremlin and automatically regain full hp!")
                 player["hp"] = 20
                 world["vic"].append("purple gremlin")
-                print(world["inv"])
                 print("Back to the living room!")
                 move_to_location(world, "living room")
                 return
