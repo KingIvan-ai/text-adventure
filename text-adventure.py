@@ -60,7 +60,7 @@ def livingRoom(world, fileParagraphs):
                     move_to_location(world, "dining room")
                 break
             if userInput == "no":
-                print("You decide to not steal the dog's jewelry and instead go to the dining room.")
+                print("You decide to not steal the key and instead go to the dining room.")
                 move_to_location(world, "dining room")
                 break
 
