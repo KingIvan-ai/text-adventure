@@ -38,16 +38,3 @@ You decide not to open the shiny vase.
 As you turn to leave, a sudden cracking noise comes from the corner of the room. 
 Before you can react, a dark figure with glowing red eyes leaps at you, knocking 
 you unconscious. You wake up in your bed. It was all a dream.
-GAME OVER.
-
-You successfully grab the key and axe, ready to save your friend.
-Back in the living room, the monster is still asleep. 
-But how will you get past it without waking it up?
-
-You enter the living room again, determined to save your friend.
-This time, the monster stirs and roars as it awakens. It charges 
-at you with frightening speed. Without hesitation, you swing the 
-axe and strike it in the head, dealing a fatal blow. The monster 
-collapses, lifeless.
-You quickly open the cage and free your friend.
-Congratulations, you've saved your friend and survived the Haunted Mansion!
