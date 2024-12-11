@@ -1,3 +1,8 @@
+
+
+def display_screne(world, fileParagraphs, paragraph_index, return_mesage):
+    pass
+
 def get_valid_input(prompt, valid_options):
     while True:
         choice = input(prompt).lower()
@@ -20,8 +25,6 @@ def move_to_location(world, new_location):
     print(world["locations"])
     world["loc"] = new_location
 
-# The walkway function reads from a text file to set the scene for this location.
-# Then it present the player with the option of enetering the living room or dining room.
 def walkway(world, fileParagraphs):
     print(fileParagraphs[1])
     userInput = get_valid_input("Where do you want to go? (Enter 'living room' or 'dining room')\n>", ["living room", "dining room"])
@@ -87,26 +90,24 @@ def diningRoom(world, fileParagraphs):
                     move_to_location(world, "dead")
                     break
 
-# This will be a final scenario that will automatically take place
-# When the player has successfully grabbed both the key and the axe
-# I am still working on it.
-def finalFight(world):
+def finalFight(world, player, enemy):
+
     import fight
 
     result = fight.battle(player, enemy)
     if result == "enemy dead":
-        print(f"The {enemy['name']} collapses on the ground")
-        print("YOU WIN!")
+        print(f"The monster collapses on the ground")
+        return "YOU WIN!"
     else:
-        print(f"The world goes dark for our hero {player['name']}")
-
+        print(f"You tried your best. But the monster has killed and eaten you.")
+        world["loc"] = "dead"
 
 def saveResults (player, world): 
     f = open ("saveResults.txt", "w")
     print(player)
-    f.write(f"name: {player["name"]}\n")
-    f.write(f"health points: {player["hp"]}\n")
-    f.write(f"inventory: {world["inv"]}\n")
+    f.write(f"name: {player['name']}\n")
+    f.write(f"health points: {player['hp']}\n")
+    f.write(f"inventory: {world['inv']}\n")
     f.close
 
 def game_loop(world, fileParagraphs):
@@ -130,9 +131,6 @@ def game_loop(world, fileParagraphs):
         if world["loc"] == "dining room":
             diningRoom(world, fileParagraphs)
 
-# The main function starts by creating a name for our player 
-# and then defining variouis dictionaries that will be used throughout the program such as world["inv"]
-# It also reads the introductory text and contains a while loop for deciding which function to run.
 def main():
     # Starts the game by initializing the world and player, and runs the main loop.
     world = {
@@ -140,7 +138,7 @@ def main():
         "inv": [],
         "locations": []
     }
-    with open("rooms(1).txt", "r") as file:
+    with open("rooms.txt", "r") as file:
         fileParagraphs = file.read().split("\n\n")
     print("Welcome to the Haunted Mansion!")
     print("Please enter your name for this adventure")
