@@ -33,14 +33,14 @@ def turn(attacker, defender, who):
         elif decision == "2":
             healAmt = sum(diceRoll("1d4"))
             attacker["hp"] += healAmt
+            if attacker["hp"] > 20:
+                attacker["hp"] = 20
             print(f"{attacker['name']} rests and recovers {healAmt} hp")
             break
         else:
             print("Invalid input. Please enter '1' or '2'")
 
 def battle(player, enemy):
-    print(f"You have returned to the living room.\nThis time, the monster is awake and ready to fight!\n"
-          "The Monster comes towards you and the fight begins!")
 
     while True:
         turn(player, enemy, "player")
