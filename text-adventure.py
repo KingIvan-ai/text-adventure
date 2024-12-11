@@ -4,11 +4,12 @@ def display_screne(world, fileParagraphs, paragraph_index, return_mesage):
     pass
 
 def get_valid_input(prompt, valid_options):
-    while True:
         choice = input(prompt).lower()
-        if choice in valid_options:
+        try:
+            choice in valid_options
             return choice
-        print(f"Invalid input. Please enter {valid_options}")
+        except:
+            return print(f"Invalid input. Please enter {valid_options}")
         
 def add_to_inventory(world, item):
     if item not in world["inv"]:
@@ -122,7 +123,11 @@ def game_loop(world, fileParagraphs):
         if {"key", "axe"}.issubset(world["inv"]):
             world["loc"] = "final battle"
         if world["loc"] == "final battle":
+<<<<<<< HEAD
             finalFight(world, player,)
+=======
+            finalFight(world, player, enemy)
+>>>>>>> 9dcd79775d3a9eb6cd60fd38c93d46ebe6dfde9e
 
         if world["loc"] == "walkway":
             walkway(world, fileParagraphs)
