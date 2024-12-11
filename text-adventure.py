@@ -123,7 +123,11 @@ def game_loop(world, fileParagraphs):
         if {"key", "axe"}.issubset(world["inv"]):
             world["loc"] = "final battle"
         if world["loc"] == "final battle":
+<<<<<<< HEAD
+            finalFight(world, player,)
+=======
             finalFight(world, player, enemy)
+>>>>>>> 9dcd79775d3a9eb6cd60fd38c93d46ebe6dfde9e
 
         if world["loc"] == "walkway":
             walkway(world, fileParagraphs)
