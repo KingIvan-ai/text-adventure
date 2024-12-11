@@ -18,7 +18,7 @@ def turn(attacker, defender, who):
             print("Pick an option (enter '1' or '2'): ")
             print("1: Attack")
             print("2: Heal")
-            decision = input() # Ideally, we would validate their input
+            decision = input()
         else:
             if (randint(1,2) == 1):  # 50% chance
                 decision = "1" # enemy decided to attack
