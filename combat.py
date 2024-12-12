@@ -47,7 +47,9 @@ def battle(player, enemy):
         turn(enemy, player, "enemy")
         print(f"{player['name']} has {player['hp']} hp left")
         print(f"{enemy['name']} has {enemy['hp']} hp left")
-        if (player["hp"] <= 0):
+        if (player["hp"] <= 0 and enemy["hp"] > 0):
             return "player dead"
-        if (enemy["hp"] <= 0):
+        if (enemy["hp"] <= 0 and player["hp"] > 0):
             return "enemy dead"
+        if (player["hp"] <= 0 and enemy["hp"] <=0):
+            return "both dead"

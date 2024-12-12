@@ -114,10 +114,14 @@ def combat(world, player, enemy):
                       "You then use the key to open the cage and free your friend!\n"
                       "CONGRATULATIONS! YOU WIN!")
                 return
-            else:
-                print("Sadly, the monster has one this fight. It pulls you closer and gobbles you down!\n"
-                      "GAME OVER")
+            elif result == "player dead":
+                print("Sadly, the monster has won this fight. It pulls you closer and gobbles you down!\nGAME OVER")
                 world["loc"] = "dead"
+                return
+            else:
+                print("You have killed the monster, but during the fight you were wounded fatally. You collapse on the ground dead.\nGAME OVER")
+                world["loc"] = "dead"
+                return
         if enemy == enemy2:
             if result == "enemy dead":
                 print(f"You have defeated the purple gremlin and automatically regain full hp!")
@@ -126,9 +130,14 @@ def combat(world, player, enemy):
                 print("Back to the living room!")
                 move_to_location(world, "living room")
                 return
-            else:
+            elif result == "player dead":
                 print("You tried your best. But the purple gremlin has defeated you.")
                 world["loc"] = "dead"
+                return
+            else:
+                print("You have killed the purple gremlin. But during the fight you were mortally wounded. You collapse on the floor dead.")
+                world["loc"] = "dead"
+                return
     except Exception as e:
         print(f"An unexpected error occurred in the battle: {e}")
 
