@@ -11,6 +11,18 @@ def add_to_inventory(world, item):
     if item not in world["inv"]:
         world["inv"].append(item)
 
+def describe_inventory(world):
+    if world["inv"] == []:
+        print("Your inventory is empty.")
+    else:
+        print("Your inventory includes:")
+    for item in world["inv"]:
+        if item == "key":
+            print("-key")
+        elif item == "axe":
+            print("-axe")
+
+
 # Checks if the player has all necessary items to proceed to the final battle.
 def check_final_battle(world):
     if {"key", "axe"}.issubset(world["inv"]):
@@ -28,12 +40,12 @@ def move_to_location(world, new_location):
 
 # Handles the gameplay logic for the walkway location.
 def walkway(world, fileParagraphs):
-    print(fileParagraphs[1])
+    print("\n", fileParagraphs[1])
     userInput = get_valid_input("Where do you want to go? (Enter 'living room' or 'dining room')\n>", ["living room", "dining room"])
     move_to_location(world, userInput)
 
 # Handles the gameplay logic for the living room location.
-def livingRoom(world, fileParagraphs):
+def living_room(world, fileParagraphs):
     while True:
         if world["locations"].count("living room") < 2:  # First visit to the living room.
             print("\n", fileParagraphs[2])
@@ -42,8 +54,9 @@ def livingRoom(world, fileParagraphs):
                 add_to_inventory(world, "key")
                 check_final_battle(world)
                 if not {"key", "axe"}.issubset(world["inv"]):
-                    print("Excellent. You have successfully stolen the key!\n"
-                          "Now, it's time to go to the dining room.")
+                    print("Excellent. You have successfully stolen the key!")
+                    describe_inventory(world)
+                    print("Now, it's time to go to the dining room.")
                     move_to_location(world, "dining room")
                 break
             if userInput == "no":
@@ -55,10 +68,12 @@ def livingRoom(world, fileParagraphs):
             userInput = get_valid_input("Will you steal the key from the monster this time? (Enter 'yes' or 'no')\n>", ["yes", "no"])
             if userInput == "yes":
                 add_to_inventory(world, "key")
+                describe_inventory(world)
                 check_final_battle(world)
                 if not {"key", "axe"}.issubset(world["inv"]):
-                    print("Excellent. You have successfully stolen the key!\n"
-                          "Now, it's time to go to the dining room.")
+                    print("Excellent. You have successfully stolen the key!")
+                    describe_inventory(world)
+                    print("Now, it's time to go to the dining room.")
                     move_to_location(world, "dining room")
                 break
             if userInput == "no":
@@ -67,7 +82,7 @@ def livingRoom(world, fileParagraphs):
                 break
 
 # Handles the gameplay logic for the dining room location.
-def diningRoom(world, fileParagraphs):
+def dining_room(world, fileParagraphs):
     while True:
         if world["locations"].count("dining room") < 2:  # First visit to the dining room.
             print("\n", fileParagraphs[3])
@@ -76,6 +91,8 @@ def diningRoom(world, fileParagraphs):
                 add_to_inventory(world, "axe")
                 check_final_battle(world)
                 print(fileParagraphs[4])
+                if not {"key", "axe"}.issubset(world["inv"]):
+                    describe_inventory(world)
                 move_to_location(world, "living room")
                 break
             if userInput == "no":
@@ -148,7 +165,7 @@ def combat(world, player, enemy):
     except Exception as e:
         print(f"An unexpected error occurred in the battle: {e}")
 
-def saveResults(player, world):
+def save_results(player, world):
     # Saves the player's progress to a text file.
     try:
         with open("saveResults.txt", "w") as f:
@@ -173,6 +190,7 @@ def game_loop(world, fileParagraphs):
 
         # Handle different game states based on the player's location.
         if world["loc"] == "final battle":
+            describe_inventory(world)
             print(f"\nYou have successfully grabbed both the key and the axe.\nIt's time for the final showdown between you and the monster.\n"
                   "The Monster comes towards you and the fight begins!")
             print(f"Monster hp: {enemy1['hp']}\nMonster attack: {enemy1['atk']}")
@@ -181,9 +199,9 @@ def game_loop(world, fileParagraphs):
         elif world["loc"] == "walkway":
             walkway(world, fileParagraphs)  # Processes the "walkway" location.
         elif world["loc"] == "living room":
-            livingRoom(world, fileParagraphs)  # Processes the "living room" location.
+            living_room(world, fileParagraphs)  # Processes the "living room" location.
         elif world["loc"] == "dining room":
-            diningRoom(world, fileParagraphs)  # Processes the "dining room" location.
+            dining_room(world, fileParagraphs)  # Processes the "dining room" location.
 
 
 def main():
@@ -239,8 +257,8 @@ def main():
     # Welcomes the player and provides initial game details.
     print(f"\nWelcome to the Haunted Mansion {player['name']}!")
     print(fileParagraphs[0], end="\n\n")
-    print(f"Your hp: {player['hp']}\nYour attack: {player['atk']}\n")
-
+    print(f"Your hp: {player['hp']}\nYour attack: {player['atk']}")
+    describe_inventory(world)
     walkway(world, fileParagraphs)  # Starts the game at the "walkway" location.
     game_loop(world, fileParagraphs)  # Enters the main game loop.
 
