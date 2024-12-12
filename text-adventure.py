@@ -187,8 +187,6 @@ def game_loop(world, fileParagraphs):
         # Check if the player has the necessary items to trigger the final battle.
         if {"key", "axe"}.issubset(world["inv"]):
             world["loc"] = "final battle"
-        if world["loc"] == "final battle":
-            finalFight(world, player,)
 
         # Handle different game states based on the player's location.
         if world["loc"] == "final battle":
