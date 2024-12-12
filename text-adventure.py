@@ -196,13 +196,13 @@ def main():
     enemy1 = {
         "name" : "Monster",
         "hp" : 20,
-        "atk" : 20
+        "atk" : 5
     }
     global enemy2
     enemy2 = {
         "name" : "purple gremlin",
         "hp" : 10,
-        "atk" : 20
+        "atk" : 3
     }
     print(f"\nWelcome to the Haunted Mansion {player['name']}!")
     print(fileParagraphs[0], end="\n\n")
