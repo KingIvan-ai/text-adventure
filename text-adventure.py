@@ -204,7 +204,8 @@ def main():
         "hp" : 10,
         "atk" : 20
     }
-    print("\n",fileParagraphs[0], end="\n\n")
+    print(f"\nWelcome to the Haunted Mansion {player['name']}!")
+    print(fileParagraphs[0], end="\n\n")
     print(f"Your hp: {player['hp']}\nYour attack: {player['atk']}\n")
     walkway(world, fileParagraphs)
     game_loop(world, fileParagraphs)
