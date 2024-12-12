@@ -31,7 +31,7 @@ def walkway(world, fileParagraphs):
 def livingRoom(world, fileParagraphs):
     while True:
         if world["locations"].count("living room") < 2: # If the player has not already been to the living room it will read a detailed descritpion of the living room.
-            print(fileParagraphs[2])
+            print("\n", fileParagraphs[2])
             userInput = get_valid_input("Will you attempt to take the key from the monster? (Enter 'yes' or 'no')\n>", ["yes", "no"])
             if userInput == "yes":
                 add_to_inventory(world, "key")
@@ -46,7 +46,7 @@ def livingRoom(world, fileParagraphs):
                 move_to_location(world, "dining room")
                 break
         else: # If the player has already been here, it will read the text below instead.
-            print("You have returned to the living room with the monster and your friend.")
+            print("\nYou have returned to the living room with the monster and your friend.")
             userInput = get_valid_input("Will you steal the key from the monster this time? (Enter 'yes' or 'no')\n>", ["yes", "no"])
             if userInput == "yes":
                 add_to_inventory(world, "key")
@@ -64,7 +64,7 @@ def livingRoom(world, fileParagraphs):
 def diningRoom(world, fileParagraphs):
     while True:
         if world["locations"].count("dining room") < 2: # If the player has not already been to the dining room it will read a detailed descritpion of the dining room.
-            print(fileParagraphs[3])
+            print("\n", fileParagraphs[3])
             userInput = get_valid_input("Will you open the vase? (Enter 'yes' or 'no')\n>", ["yes", "no"])
             if userInput == "yes":
                 add_to_inventory(world, "axe")
@@ -77,7 +77,7 @@ def diningRoom(world, fileParagraphs):
                 world["loc"] = "dead"
                 break
         if world["locations"].count("dining room") == 2 and "purple gremlin" not in world["vic"]: # If they have been here before, they will find that there is another door. They may open it or go back to the living room.
-            print("You have returned to the dining room. This time, you notice there is another door.\n"
+            print("\nYou have returned to the dining room. This time, you notice there is another door.\n"
                 "You may enter through the other door or return to the living room.")
             userInput = get_valid_input("Which will you choose? (Enter 'living room' or 'new door')\n>", ["living room", "new door"])
             if userInput == "living room":
@@ -89,7 +89,7 @@ def diningRoom(world, fileParagraphs):
                     combat(world, player, enemy2)
                     break
         if world["locations"].count("dining room") > 2 and "purple gremlin" not in world["vic"]:
-            print("You have returned to the dining room.")
+            print("\nYou have returned to the dining room.")
             userInput = get_valid_input("Which will you open the new door or return to the living room? (Enter 'living room' or 'new door')\n>", ["living room", "new door"])
             if userInput == "living room":
                     move_to_location(world, userInput)
@@ -106,14 +106,17 @@ def diningRoom(world, fileParagraphs):
 
 def combat(world, player, enemy):
     try:
-        import fight
-        result = fight.battle(player, enemy)
+        import combat
+        result = combat.battle(player, enemy)
         if enemy == enemy1:
             if result == "enemy dead":
-                print(f"The monster collapses on the ground dead.")
+                print(f"The monster collapses on the ground dead.\n"
+                      "You then use the key to open the cage and free your friend!\n"
+                      "CONGRATULATIONS! YOU WIN!")
                 return
             else:
-                print("You tried your best. But the monster has defeated you.")
+                print("Sadly, the monster has one this fight. It pulls you closer and gobbles you down!\n"
+                      "GAME OVER")
                 world["loc"] = "dead"
         if enemy == enemy2:
             if result == "enemy dead":
@@ -124,7 +127,7 @@ def combat(world, player, enemy):
                 move_to_location(world, "living room")
                 return
             else:
-                print("You tried your best. But your foe has defeated you.")
+                print("You tried your best. But the purple gremlin has defeated you.")
                 world["loc"] = "dead"
     except Exception as e:
         print(f"An unexpected error occurred in the battle: {e}")
@@ -149,9 +152,9 @@ def game_loop(world, fileParagraphs):
             world["loc"] = "final battle"
 
         if world["loc"] == "final battle":
-            print(f"You have successfully grabbed both the key and the axe.\nIt's time for the final showdown between you and the monster!\n"
+            print(f"\nYou have successfully grabbed both the key and the axe.\nIt's time for the final showdown between you and the monster.\n"
           "The Monster comes towards you and the fight begins!")
-            print(f"Monster hp: {enemy2['hp']}\nMonster attack: {enemy2['atk']}")
+            print(f"Monster hp: {enemy1['hp']}\nMonster attack: {enemy1['atk']}")
             combat(world, player, enemy1)
             break
         elif world["loc"] == "walkway":
@@ -193,15 +196,15 @@ def main():
     enemy1 = {
         "name" : "Monster",
         "hp" : 20,
-        "atk" : 5
+        "atk" : 20
     }
     global enemy2
     enemy2 = {
         "name" : "purple gremlin",
         "hp" : 10,
-        "atk" : 3
+        "atk" : 20
     }
-    print("\n", fileParagraphs[0], end="\n\n")
+    print("\n",fileParagraphs[0], end="\n\n")
     print(f"Your hp: {player['hp']}\nYour attack: {player['atk']}\n")
     walkway(world, fileParagraphs)
     game_loop(world, fileParagraphs)
