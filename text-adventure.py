@@ -8,7 +8,6 @@ def get_valid_input(prompt, valid_options):
 def add_to_inventory(world, item):
     if item not in world["inv"]:
         world["inv"].append(item)
-        print(f"{item} added to inventory.")
 
 def check_final_battle(world):
     if {"key", "axe"}.issubset(world["inv"]):
