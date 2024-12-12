@@ -78,7 +78,7 @@ def diningRoom(world, fileParagraphs):
                 break
         if world["locations"].count("dining room") == 2 and "purple gremlin" not in world["vic"]: # If they have been here before, they will find that there is another door. They may open it or go back to the living room.
             print("You have returned to the dining room. This time, you notice there is another door.\n"
-                "you may enter through the other door or return to the living room.")
+                "You may enter through the other door or return to the living room.")
             userInput = get_valid_input("Which will you choose? (Enter 'living room' or 'new door')\n>", ["living room", "new door"])
             if userInput == "living room":
                     move_to_location(world, userInput)
@@ -181,8 +181,8 @@ def main():
         return
 
     print("Welcome to the Haunted Mansion!")
-    print("Please enter your name for this adventure")
-    userInput = input()
+    print("Please enter your name for this adventure:")
+    userInput = input(">")
     global player
     player = {
         "name" : userInput,
@@ -201,7 +201,7 @@ def main():
         "hp" : 10,
         "atk" : 3
     }
-    print(fileParagraphs[0], end="\n\n")
+    print("\n", fileParagraphs[0], end="\n\n")
     print(f"Your hp: {player['hp']}\nYour attack: {player['atk']}\n")
     walkway(world, fileParagraphs)
     game_loop(world, fileParagraphs)
