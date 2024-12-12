@@ -1,6 +1,5 @@
-Welcome to the Haunted Mansion!
 Your best friend, a distant relative of the recently deceased owner,
-inherited this mansion after the owner’s mysterious death. During a
+inherited this mansion after the owner's mysterious death. During a
 visit, however, your friend went missing, and no one seems to know 
 where they are. It's up to you to enter the mansion, search for your 
 friend, and rescue them from whatever dark forces may lurk within...
@@ -9,8 +8,7 @@ Let the adventure begin!
 You stand before the old, creaky front door of the mansion. The air 
 is thick with a strange, unsettling chill. The door groans as you push 
 it open, revealing a dimly lit hallway with two paths ahead: the living 
-room or the dining room. Which room will you enter?
-(Enter "living room" or "dining room")
+room or the dining room.
 
 You enter the living room.
 The room is dark and filled with dust. A sleeping monster, half-lion, 
@@ -18,16 +16,12 @@ half-pitbull, lays guarding a pile of shimmering jewelry. Your heart
 races as you spot your friend locked in a cage behind the beast, the 
 large lock glinting in the low light. Among the pile of treasure, there
 is a key. Perhaps it will open the cage. But stealing the key would 
-mean risking the monster’s wrath.
-Will you attempt to take the key from the monster?
-(Enter "yes" or "no")
+mean risking the monster's wrath.
 
 You enter the dining room.
 The room is eerily quiet, save for the faint ticking of a distant clock. 
 On a table in the center of the room sits a shiny vase, its surface glinting 
 like it holds something valuable. Something about it feels off.
-Will you open the vase?
-(Enter "yes" or "no")
 
 You open the vase and find an axe inside.
 The axe feels surprisingly heavy in your hands. It may be the weapon you need 
@@ -38,16 +32,3 @@ You decide not to open the shiny vase.
 As you turn to leave, a sudden cracking noise comes from the corner of the room. 
 Before you can react, a dark figure with glowing red eyes leaps at you, knocking 
 you unconscious. You wake up in your bed. It was all a dream.
-GAME OVER.
-
-You successfully grab the key and axe, ready to save your friend.
-Back in the living room, the monster is still asleep. 
-But how will you get past it without waking it up?
-
-You enter the living room again, determined to save your friend.
-This time, the monster stirs and roars as it awakens. It charges 
-at you with frightening speed. Without hesitation, you swing the 
-axe and strike it in the head, dealing a fatal blow. The monster 
-collapses, lifeless.
-You quickly open the cage and free your friend.
-Congratulations, you've saved your friend and survived the Haunted Mansion!
