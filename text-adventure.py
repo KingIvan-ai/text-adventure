@@ -22,7 +22,6 @@ def describe_inventory(world):
         elif item == "axe":
             print("-axe")
 
-
 # Checks if the player has all necessary items to proceed to the final battle.
 def check_final_battle(world):
     if {"key", "axe"}.issubset(world["inv"]):
@@ -176,7 +175,6 @@ def save_results(player, world):
         # Handles cases where the file cannot be written.
         print("Error: Unable to save game results.")
 
-
 def game_loop(world, fileParagraphs):
     # Runs the main game loop until the game ends.
     while True:
@@ -202,7 +200,6 @@ def game_loop(world, fileParagraphs):
             living_room(world, fileParagraphs)  # Processes the "living room" location.
         elif world["loc"] == "dining room":
             dining_room(world, fileParagraphs)  # Processes the "dining room" location.
-
 
 def main():
     # Starts the game by initializing the game state and running the main loop.
@@ -261,6 +258,5 @@ def main():
     describe_inventory(world)
     walkway(world, fileParagraphs)  # Starts the game at the "walkway" location.
     game_loop(world, fileParagraphs)  # Enters the main game loop.
-
 
 main()
