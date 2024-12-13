@@ -1,3 +1,5 @@
+# Contains the main game loop and handles room navigation, user input, and storytelling.
+
 def get_valid_input(prompt, valid_options):
     # Continuously prompts the user for input until a valid option is provided.
     while True:

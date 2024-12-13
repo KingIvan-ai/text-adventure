@@ -1,3 +1,5 @@
+# Implements the combat mechanics, including dice rolling, turn-based logic, and battle resolution.
+
 from random import *
 
 def diceRoll(roll):
