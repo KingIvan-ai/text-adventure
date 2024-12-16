@@ -1,3 +1,1 @@
-name: Ben
-health points: 20
-inventory: []
+# This file stores game results, such as battle outcomes or player progress.
