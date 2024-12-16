@@ -1,18 +1,43 @@
-# Contains the main game loop and handles room navigation, user input, and storytelling.
+# This file contains the main game loop and handles room navigation, user input, and storytelling.
 
+# The fun tions used in this file are:
+# get_valid_input(prompt, valid_options): Prompts the user for valid input until they enter an option from valid_options.
+# add_to_inventory(world, item): Adds an item to the inventory if not already present.
+# describe_inventory(world): Displays the player's inventory or indicates if it's empty.
+# check_final_battle(world): Checks if the player has the required items for the final battle.
+# move_to_location(world, new_location): Moves the player to a new location, with consequences for excessive movement.
+# walkway(world, fileParagraphs): Manages gameplay in the walkway location.
+# living_room(world, fileParagraphs): Manages gameplay in the living room, including stealing the key.
+# dining_room(world, fileParagraphs): Manages gameplay in the dining room, including the axe or combat.
+# combat(world, player, enemy): Handles combat between the player and enemy.
+# save_results(player, world): Saves the player’s progress to a file.
+# game_loop(world, fileParagraphs): Main loop that controls game flow based on the player’s location.
+# main(): Initializes and starts the game.
+
+# Purpose: Asks the user for input and ensures it's one of the valid options.
+# Input:
+# prompt: A string that asks the user for input.
+# valid_options: A list of valid options that the user can choose from.
+# Returns: A valid input from the user, which is one of the valid_options.
 def get_valid_input(prompt, valid_options):
-    # Continuously prompts the user for input until a valid option is provided.
-    while True:
         choice = input(prompt).lower()
         if choice in valid_options:
             return choice
         print(f"Invalid input. Please enter {valid_options}")
 
-# Adds an item to the player's inventory if it's not already present.
+# Purpose: Adds an item to the player's inventory if it is not already present.
+# Input:
+# world: A dictionary that stores the game state (including the inventory).
+# item: The item to be added to the inventory.
+# Returns: None (modifies the inventory directly).
 def add_to_inventory(world, item):
     if item not in world["inv"]:
         world["inv"].append(item)
 
+# Purpose: Describes the items in the player’s inventory.
+# Input:
+# world: A dictionary that stores the game state (including the inventory).
+# Returns: A string that lists the items in the inventory, or a message indicating the inventory is empty.
 def describe_inventory(world):
     if world["inv"] == []:
         print("Your inventory is empty.")
@@ -24,12 +49,19 @@ def describe_inventory(world):
         elif item == "axe":
             print("-axe")
 
-# Checks if the player has all necessary items to proceed to the final battle.
+# Purpose: Checks if the player has the required items for the final battle.
+# Input:
+# world: A dictionary that stores the game state (including the inventory).
+# Returns: True if the player has the necessary items; otherwise, False.
 def check_final_battle(world):
     if {"key", "axe"}.issubset(world["inv"]):
         world["loc"] = "final battle"
 
-# Updates the player's location and handles a condition where the player moves excessively.
+# Purpose: Moves the player to a new location and handles the consequences of movement.
+# Input:
+# world: A dictionary that stores the game state (including the player’s current location).
+# new_location: A string indicating the new location the player is moving to.
+# Returns: A string describing the new location, or a message about movement consequences.
 def move_to_location(world, new_location):
     if len(world["locations"]) > 6:
         print("While you were going back and forth between the living room and the dining room\n"
@@ -39,13 +71,21 @@ def move_to_location(world, new_location):
         world["locations"].append(new_location)
         world["loc"] = new_location
 
-# Handles the gameplay logic for the walkway location.
+# Purpose: Handles gameplay when the player is in the walkway location.
+# Input:
+# world: A dictionary that stores the game state.
+# fileParagraphs: A list of paragraphs describing different events or scenarios in the walkway.
+# Returns: A string describing the current situation or actions in the walkway.
 def walkway(world, fileParagraphs):
     print("\n", fileParagraphs[1])
     userInput = get_valid_input("Where do you want to go? (Enter 'living room' or 'dining room')\n>", ["living room", "dining room"])
     move_to_location(world, userInput)
 
-# Handles the gameplay logic for the living room location.
+# Purpose: Handles gameplay when the player is in the living room, including stealing the key.
+# Input:
+# world: A dictionary that stores the game state.
+# fileParagraphs: A list of paragraphs describing different events or scenarios in the living room.
+# Returns: A string describing the current situation or actions in the living room.
 def living_room(world, fileParagraphs):
     while True:
         if world["locations"].count("living room") < 2:  # First visit to the living room.
@@ -82,7 +122,11 @@ def living_room(world, fileParagraphs):
                 move_to_location(world, "dining room")
                 break
 
-# Handles the gameplay logic for the dining room location.
+# Purpose: Handles gameplay when the player is in the dining room, including interactions like the axe or combat.
+# Input:
+# world: A dictionary that stores the game state.
+# fileParagraphs: A list of paragraphs describing different events or scenarios in the dining room.
+# Returns: A string describing the current situation or actions in the dining room.
 def dining_room(world, fileParagraphs):
     while True:
         if world["locations"].count("dining room") < 2:  # First visit to the dining room.
@@ -128,10 +172,15 @@ def dining_room(world, fileParagraphs):
             move_to_location(world, "living room")
             break
 
-# Handles the combat system logic.
+# Purpose: Handles combat between the player and an enemy.
+# Input:
+# world: A dictionary that stores the game state.
+# player: An object representing the player's current stats (e.g., health, inventory).
+# enemy: An object representing the enemy’s stats (e.g., health, attack power).
+# Returns: A string describing the result of the combat (win/loss or status updates).
 def combat(world, player, enemy):
     try:
-        import combat  # Assuming external combat logic exists.
+        import combat
         result = combat.battle(player, enemy)
         if enemy == enemy1:
             if result == "enemy dead":
@@ -166,8 +215,12 @@ def combat(world, player, enemy):
     except Exception as e:
         print(f"An unexpected error occurred in the battle: {e}")
 
+# Purpose: Saves the player's progress to a file.
+# Input:
+# player: An object containing the player's stats.
+# world: A dictionary that stores the game state (including the player’s progress).
+# Returns: None (modifies a file to save the game state).
 def save_results(player, world):
-    # Saves the player's progress to a text file.
     try:
         with open("saveResults.txt", "w") as f:
             f.write(f"name: {player['name']}\n")
@@ -177,8 +230,12 @@ def save_results(player, world):
         # Handles cases where the file cannot be written.
         print("Error: Unable to save game results.")
 
+# Purpose: Controls the main flow of the game, including movement and interactions based on the player’s location.
+# Input:
+# world: A dictionary that stores the game state.
+# fileParagraphs: A list of paragraphs describing the scenarios or events at different locations.
+# Returns: None (runs the game loop until the game ends).
 def game_loop(world, fileParagraphs):
-    # Runs the main game loop until the game ends.
     while True:
         if world["loc"] == "dead":
             print("GAME OVER")
@@ -203,8 +260,10 @@ def game_loop(world, fileParagraphs):
         elif world["loc"] == "dining room":
             dining_room(world, fileParagraphs)  # Processes the "dining room" location.
 
+# Purpose: Initializes the game, sets up initial conditions, and starts the game loop.
+# Input: None.
+# Returns: None (calls other functions to run the game).
 def main():
-    # Starts the game by initializing the game state and running the main loop.
     world = {
         "loc": "walkway",  # The player's current location.
         "inv": [],  # The player's inventory.
